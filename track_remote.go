@@ -47,6 +47,14 @@ func (t *TrackRemote) ID() string {
 	return t.id
 }
 
+// SetID Allows to set ID to current TrackRemote. This method
+// should be used only when TrackRemote is created with custom RTPReceivers
+func (t *TrackRemote) SetID(id string) {
+	t.mu.Lock()
+	t.id = id
+	t.mu.Unlock()
+}
+
 // RID gets the RTP Stream ID of this Track
 // With Simulcast you will have multiple tracks with the same ID, but different RID values.
 // In many cases a TrackRemote will not have an RID, so it is important to assert it is non-zero
@@ -76,6 +84,14 @@ func (t *TrackRemote) StreamID() string {
 	t.mu.RLock()
 	defer t.mu.RUnlock()
 	return t.streamID
+}
+
+// SetStreamID Allows to set stream ID to current TrackRemote. This method
+// should be used only when TrackRemote is created with custom RTPReceivers
+func (t *TrackRemote) SetStreamID(streamID string) {
+	t.mu.Lock()
+	t.streamID = streamID
+	t.mu.Unlock()
 }
 
 // SSRC gets the SSRC of the track
