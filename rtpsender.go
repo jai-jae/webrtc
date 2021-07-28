@@ -119,7 +119,11 @@ func (r *RTPSender) getParameters() RTPSendParameters {
 			},
 		},
 	}
-	sendParameters.Codecs = r.tr.getCodecs()
+	if r.tr != nil {
+		sendParameters.Codecs = r.tr.getCodecs()
+	} else {
+		sendParameters.Codecs = r.api.mediaEngine.getCodecsByKind(r.track.Kind())
+	}
 	return sendParameters
 }
 
